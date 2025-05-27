@@ -1,0 +1,29 @@
+body {
+    background-color: #111;
+    color: #eee;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 80px;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+}
+
+.button {
+    background-color: crimson;
+    color: white;
+    padding: 15px 30px;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.btc-address {
+    font-size: 20px;
+    color: yellow;
+    margin: 15px 0;
+}

